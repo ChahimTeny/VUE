@@ -1,58 +1,177 @@
 <template>
-    <div class="badass-todo">
-      <div class="title has-text-centered">
-        Formulario de inscripcion
+  <div class="badass-todo">
+
+    <div class="card mb-5">
+      <header class="card-header">
+          <p class="card-header-title is-4">
+           Formulario de Inscripción
+          </p>
+      </header>
+      <div class="card-content">
+          <div class="content">
+              <form
+                  @submit.prevent="addTodo"
+              >
+              <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                      <label class="label">Información personal</label>
+                  </div>
+                  <div class="field-body">
+                      <div class="field">
+                      <p class="control is-expanded has-icons-left">
+                          <input class="input" type="text" placeholder="Nombre">
+                          <span class="icon is-small is-left">
+                          <i class="fas fa-user"></i>
+                          </span>
+                      </p>
+                      </div>
+                      <div class="field">
+                      <p class="control is-expanded has-icons-left has-icons-right">
+                          <input class="input is-success" type="email" placeholder="Correo" value="">
+                          <span class="icon is-small is-left">
+                          <i class="fas fa-envelope"></i>
+                          </span>
+                          <span class="icon is-small is-right">
+                          <i class="fas fa-check"></i>
+                          </span>
+                      </p>
+                      </div>
+                  </div>
+                  </div>
+
+                  <div class="field is-horizontal">
+                  <div class="field-label"></div>
+                  <div class="field-body">
+                      <div class="field is-expanded">
+                      <div class="field has-addons">
+                          <p class="control">
+                          <a class="button is-static">
+                              +502
+                          </a>
+                          </p>
+                          <p class="control is-expanded">
+                          <input class="input" type="tel" placeholder="Teléfono">
+                          </p>
+                      </div>
+                      </div>
+                  </div>
+                  </div>
+
+                  <div class="field is-horizontal">
+                  <div class="field-label is-normal">
+                      <label class="label">Departamento</label>
+                  </div>
+                  <div class="field-body">
+                      <div class="field is-narrow">
+                      <div class="control">
+                          <div class="select is-fullwidth">
+                          <select>
+                              <option>Alta Verapaz</option>
+                              <option>Baja Verapaz</option>
+                              <option>Chimaltenago</option>
+                              <option>Chiquimula</option>
+                              <option>Guatemala</option>
+                              <option>El Progreso</option>
+                              <option>Escuintla</option>
+                              <option>Huehuetenango</option>
+                              <option>Izabal</option>
+                              <option>Jalapa</option>
+                              <option>Jutiapa</option>
+                              <option>Petén</option>
+                              <option>Quetzaltenango</option>
+                              <option>Quiché</option>
+                              <option>Retalhuleu</option>
+                              <option>Sacatepequez</option>
+                              <option>San Marcos</option>
+                              <option>Santa Rosa</option>
+                              <option>Sololá</option>
+                              <option>Suchitepequez</option>
+                              <option>Totonicapán</option>
+                              <option>Zacapa</option>
+                          </select>
+                          </div>
+                      </div>
+                      </div>
+                  </div>
+                  </div>
+
+                <div class="field is-horizontal">
+                    <div class="field-label">
+                        <label class="label">¿pago?</label>
+                    </div>
+                    <div class="field-body">
+                        <div class="field is-narrow">
+                            <div class="control">
+                                <label class="checkbox">
+                                <input type="checkbox">
+                                    marcar si la persona ya realizo el pago
+                            </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="field is-horizontal">
+                <div class="field-label">
+                <label class="label">¿institucional?</label>
+                </div>
+                <div class="field-body">
+                <div class="field is-narrow">
+                <div class="control">
+                    <label class="checkbox">
+                    <input type="checkbox">
+                        marcar si la persona viene de una institucion
+                </label>
+                </div>
+                </div>
+                </div>
+                </div>
+
+                          
+              </form>
+
+              <div class="field is-grouped is-grouped-centered">
+                <p class="control">
+                    <a class="button is-primary mt-5">
+                    Guardar
+                    </a>
+                </p>
+                </div>
+          </div>
+      </div>
       </div>
   
-      <form
-        @submit.prevent="addTodo"
-      >
-        <div class="field is-grouped mb-5">
-          <p class="control is-expanded">
-          <input v-model="newTodoContent" class="input" type="text" placeholder="Agrega algo por hacer">
-          
-          </p>
-          <butto class="control">
-            <button
-              :disabled="!newTodoContent"
-              class="button is-info">Añadir</button>
-          </butto>
-        </div>
-        
-      </form>
-  
-  
-      <div v-for="tarjeta in lista" class="card mb-5" :class="{ 'has-background-success-light' : tarjeta.done }">
-        <div class="card-content">
-          <div class="content">
-            <div class="columns is-mobile is-vcentered">
-              <div
-                :class="{'has-text-success line-through' : tarjeta.done}"
-                class="column">
-                {{ tarjeta.content }}
-              </div>
-              <div class="column is-5 has-text-right">
-                <button 
-                  @click="checkButton(tarjeta.id)"
-                  :class="tarjeta.done ? 'is-success' : 'is-light'"
-                  class="button">
-                  &check;
-                </button>
-                <button 
-                  @click="deleteTodo(tarjeta.id)"
-                  class="button is-danger ml-2">
-                  &cross;
-                </button>
-              </div>
+    <div v-for="tarjeta in lista" class="card mb-5" :class="{ 'has-background-success-light' : tarjeta.done }">
+      <div class="card-content">
+        <div class="content">
+          <div class="columns is-mobile is-vcentered">
+            <div
+              :class="{'has-text-success line-through' : tarjeta.done}"
+              class="column">
+              {{ tarjeta.content }}
+            </div>
+            <div class="column is-5 has-text-right">
+              <button 
+                @click="checkButton(tarjeta.id)"
+                :class="tarjeta.done ? 'is-success' : 'is-light'"
+                class="button">
+                &check;
+              </button>
+              <button 
+                @click="deleteTodo(tarjeta.id)"
+                class="button is-danger ml-2">
+                &cross;
+              </button>
             </div>
           </div>
         </div>
       </div>
-  
     </div>
-  </template>
+
+  </div>
+</template>
   
-  <script setup>
+<script setup>
     import { ref, onMounted } from 'vue'
     import { collection, onSnapshot, addDoc, doc, deleteDoc, updateDoc } from 'firebase/firestore';
     import{ db } from '@/firebase'
@@ -134,11 +253,11 @@
   
   </script>
   
-  <style>
+<style>
     @import 'bulma/css/bulma.min.css';
   
     .badass-todo{
-      max-width: 400px;
+      max-width: 800px;
       padding: 20px;
       margin: 0 auto;
     }
