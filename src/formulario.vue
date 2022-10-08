@@ -26,7 +26,7 @@
                   <div class="field-body">
                       <div class="field">
                       <p class="control is-expanded has-icons-left">
-                          <input v-model="nombreForm" class="input" type="text" placeholder="Nombre"
+                          <input v-model="nombreForm" class="input" type="text" placeholder="Nombre completo"
                           :class="!nombreForm ? 'is-danger' : 'is-success' "
                           >
                           <span class="icon is-small is-left">
@@ -148,12 +148,21 @@
                     Guardar
                     </button>
                 </p>
-                </div>     
+                </div> 
               </form>
           </div>
       </div>
       </div>
   
+      <div class="card">
+        <header class="card-header">
+          <p class="card-header-title is-4">
+           Lista de participantes
+          </p>
+      </header>
+      </div>
+
+      <br>
     <div v-for="tarjeta in lista" class="card mb-5" :class="{ 'has-background-success-light' : tarjeta.pago }">
       <div class="card-content">
         <div class="content">
@@ -310,10 +319,10 @@
 
     .card{
       background: rgba( 255, 255, 255, 0.8 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-backdrop-filter: blur( 9.5px );
--webkit-backdrop-filter: blur( 9.5px );
-border-radius: 10px;
+      box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+      backdrop-filter: blur( 9.5px );
+      -webkit-backdrop-filter: blur( 9.5px );
+      border-radius: 10px;
     }
 
     html {
@@ -327,5 +336,6 @@ border-radius: 10px;
     .imagenredonda{
       border-radius: 13px;
     }
+
   </style>
   
