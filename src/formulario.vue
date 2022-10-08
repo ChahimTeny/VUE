@@ -1,5 +1,12 @@
 <template>
-  <div class="badass-todo">
+  <div class="fondo">
+
+    <div class="badass-todo">
+    
+    <figure class="image is-3by1 ">
+       <img class="imagenredonda" src="./assets/foto.png">
+    </figure>
+    <br>
 
     <div class="card mb-5">
       <header class="card-header">
@@ -19,7 +26,9 @@
                   <div class="field-body">
                       <div class="field">
                       <p class="control is-expanded has-icons-left">
-                          <input v-model="nombreForm" class="input" type="text" placeholder="Nombre">
+                          <input v-model="nombreForm" class="input" type="text" placeholder="Nombre"
+                          :class="!nombreForm ? 'is-danger' : 'is-success' "
+                          >
                           <span class="icon is-small is-left">
                           <i class="fas fa-user"></i>
                           </span>
@@ -27,7 +36,9 @@
                       </div>
                       <div class="field">
                       <p class="control is-expanded has-icons-left has-icons-right">
-                          <input v-model="correoForm" class="input is-success" type="email" placeholder="Correo">
+                          <input v-model="correoForm" class="input " type="email" placeholder="Correo"
+                            :class="!correoForm ? 'is-danger' : 'is-success' "
+                          >
                           <span class="icon is-small is-left">
                           <i class="fas fa-envelope"></i>
                           </span>
@@ -50,7 +61,9 @@
                           </a>
                           </p>
                           <p class="control is-expanded">
-                          <input v-model="telefonoForm" class="input" type="tel" placeholder="Teléfono">
+                          <input v-model="telefonoForm" class="input" type="tel" placeholder="Teléfono"
+                          :class="!telefonoForm ? 'is-danger' : 'is-success' "
+                          >
                           </p>
                       </div>
                       </div>
@@ -130,8 +143,8 @@
                 <div class="field is-grouped is-grouped-centered">
                 <p class="control">
                     <button 
-                    :disabled="!nombreForm"
-                    class="button is-primary mt-5">
+                    :disabled="!nombreForm || !telefonoForm || !correoForm || !departamentoForm"
+                    class="button is-success is-rounded p-5 m-">
                     Guardar
                     </button>
                 </p>
@@ -151,7 +164,7 @@
               {{ tarjeta.nombre }}
             </div>
             <div class="column is-5 has-text-right">
-              <button 
+              <button
                 @click="checkButton(tarjeta.id)"
                 :class="tarjeta.pago ? 'is-success' : 'is-light'"
                 class="button">
@@ -169,6 +182,9 @@
     </div>
 
   </div>
+
+</div>
+
 </template>
   
 <script setup>
@@ -262,7 +278,7 @@
         const index = lista.value.findIndex(lista => lista.id === id)
   
         updateDoc(doc(todosCollectionRef, id), {
-          pago: !lista.value[index].done
+          pago: !lista.value[index].pago
         })
         // lista.value[index].done ? true : false
       }
@@ -272,14 +288,44 @@
   
 <style>
     @import 'bulma/css/bulma.min.css';
-  
+
     .badass-todo{
       max-width: 800px;
+      min-height: 100%;
       padding: 20px;
       margin: 0 auto;
     }
     .line-through{
       text-decoration-line: line-through;
+    }
+
+    .title{
+      margin-top: 15px;
+      font-size: 30px;
+      color: rgb(106, 75, 210);
+      font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+      text-size-adjust: 25px;
+      text-align: center;
+    }
+
+    .card{
+      background: rgba( 255, 255, 255, 0.8 );
+box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
+backdrop-filter: blur( 9.5px );
+-webkit-backdrop-filter: blur( 9.5px );
+border-radius: 10px;
+    }
+
+    html {
+      height: 100%;
+    }
+    body {
+      background: linear-gradient(220.55deg, #8FFF85 0%, #39A0FF 80%);
+      min-height: 100%;
+    }
+
+    .imagenredonda{
+      border-radius: 13px;
     }
   </style>
   
