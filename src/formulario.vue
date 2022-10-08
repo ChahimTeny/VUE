@@ -19,7 +19,7 @@
                   <div class="field-body">
                       <div class="field">
                       <p class="control is-expanded has-icons-left">
-                          <input class="input" type="text" placeholder="Nombre">
+                          <input v-model="nombreForm" class="input" type="text" placeholder="Nombre">
                           <span class="icon is-small is-left">
                           <i class="fas fa-user"></i>
                           </span>
@@ -27,7 +27,7 @@
                       </div>
                       <div class="field">
                       <p class="control is-expanded has-icons-left has-icons-right">
-                          <input class="input is-success" type="email" placeholder="Correo" value="">
+                          <input v-model="correoForm" class="input is-success" type="email" placeholder="Correo">
                           <span class="icon is-small is-left">
                           <i class="fas fa-envelope"></i>
                           </span>
@@ -50,7 +50,7 @@
                           </a>
                           </p>
                           <p class="control is-expanded">
-                          <input class="input" type="tel" placeholder="Teléfono">
+                          <input v-model="telefonoForm" class="input" type="tel" placeholder="Teléfono">
                           </p>
                       </div>
                       </div>
@@ -65,7 +65,7 @@
                       <div class="field is-narrow">
                       <div class="control">
                           <div class="select is-fullwidth">
-                          <select>
+                          <select v-model="departamentoForm">
                               <option>Alta Verapaz</option>
                               <option>Baja Verapaz</option>
                               <option>Chimaltenago</option>
@@ -103,7 +103,7 @@
                         <div class="field is-narrow">
                             <div class="control">
                                 <label class="checkbox">
-                                <input type="checkbox">
+                                <input v-model="pagoForm" type="checkbox">
                                     marcar si la persona ya realizo el pago
                             </label>
                             </div>
@@ -119,7 +119,7 @@
                 <div class="field is-narrow">
                 <div class="control">
                     <label class="checkbox">
-                    <input type="checkbox">
+                    <input v-model="institucionForm" type="checkbox">
                         marcar si la persona viene de una institucion
                 </label>
                 </div>
@@ -127,33 +127,33 @@
                 </div>
                 </div>
 
-                          
-              </form>
-
-              <div class="field is-grouped is-grouped-centered">
+                <div class="field is-grouped is-grouped-centered">
                 <p class="control">
-                    <a class="button is-primary mt-5">
+                    <button 
+                    :disabled="!nombreForm"
+                    class="button is-primary mt-5">
                     Guardar
-                    </a>
+                    </button>
                 </p>
-                </div>
+                </div>     
+              </form>
           </div>
       </div>
       </div>
   
-    <div v-for="tarjeta in lista" class="card mb-5" :class="{ 'has-background-success-light' : tarjeta.done }">
+    <div v-for="tarjeta in lista" class="card mb-5" :class="{ 'has-background-success-light' : tarjeta.pago }">
       <div class="card-content">
         <div class="content">
           <div class="columns is-mobile is-vcentered">
             <div
-              :class="{'has-text-success line-through' : tarjeta.done}"
+              :class="{'has-text-success line-through' : tarjeta.pago}"
               class="column">
-              {{ tarjeta.content }}
+              {{ tarjeta.nombre }}
             </div>
             <div class="column is-5 has-text-right">
               <button 
                 @click="checkButton(tarjeta.id)"
-                :class="tarjeta.done ? 'is-success' : 'is-light'"
+                :class="tarjeta.pago ? 'is-success' : 'is-light'"
                 class="button">
                 &check;
               </button>
@@ -210,8 +210,8 @@
         querySnapshot.forEach((doc) => {
           const todo = {
              id: doc.id,
-             content: doc.data().content,
-             done: doc.data().done
+             nombre: doc.data().nombre,
+             pago: doc.data().pago
            }
            fbTodos.push(todo)
          })
@@ -219,12 +219,23 @@
       })
     })
     
-    const newTodoContent = ref('')
+    // const newTodoContent = ref('')
+    const nombreForm = ref('')
+    const correoForm = ref('')
+    const telefonoForm = ref('')
+    const departamentoForm = ref('')
+    const pagoForm = ref(false)
+    const institucionForm = ref(false)
   
     const addTodo = () => {
       addDoc(todosCollectionRef, {
-        content: newTodoContent.value,
-        done: false
+        nombre: nombreForm.value,
+        correo: correoForm.value,
+        telefono: telefonoForm.value,
+        departamento: departamentoForm.value,
+        institucion: institucionForm.value,
+        pago: pagoForm.value
+        
       })
       // const newTodo = {
       //   id: uuidv4(),
@@ -232,7 +243,13 @@
       //   done: false
       // }
       // lista.value.unshift(newTodo)
-      newTodoContent.value = ''
+      nombreForm.value = ''
+      correoForm.value = ''
+      telefonoForm.value = ''
+      departamentoForm.value = ''
+      pagoForm.value = false
+      institucionForm.value = false
+
     }
   
     //ELIMINAR
@@ -245,7 +262,7 @@
         const index = lista.value.findIndex(lista => lista.id === id)
   
         updateDoc(doc(todosCollectionRef, id), {
-          done: !lista.value[index].done
+          pago: !lista.value[index].done
         })
         // lista.value[index].done ? true : false
       }
