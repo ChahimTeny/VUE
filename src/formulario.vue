@@ -155,11 +155,9 @@
       </div>
   
       <div class="card">
-        <header class="card-header">
           <p class="card-header-title is-4">
            Lista de participantes
           </p>
-      </header>
       </div>
 
       <br>
